@@ -1,0 +1,7 @@
+package test.math;
+
+component AsinCommandTest{
+    implementation Math{
+        Q a = asin(0.5);
+    }
+}

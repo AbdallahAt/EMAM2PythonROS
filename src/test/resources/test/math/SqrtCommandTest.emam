@@ -1,0 +1,7 @@
+package test.math;
+
+component SqrtCommandTest{
+    implementation Math{
+        Q a = sqrt(4);
+    }
+}

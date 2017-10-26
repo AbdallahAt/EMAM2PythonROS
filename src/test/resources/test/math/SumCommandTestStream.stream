@@ -1,0 +1,5 @@
+package test.math;
+
+stream SumCommandTestStream for SumCommandTest{
+    out1: 6 tick 6 tick 6;
+}

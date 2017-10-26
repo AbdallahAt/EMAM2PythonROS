@@ -1,0 +1,7 @@
+package test.math;
+
+component Atan2CommandTest{
+    implementation Math{
+        Q a = atan2(0.5);
+    }
+}

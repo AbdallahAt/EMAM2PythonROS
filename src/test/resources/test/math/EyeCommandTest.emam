@@ -1,0 +1,7 @@
+package test.math;
+
+component EyeCommandTest{
+    implementation Math{
+        Q^{2,2} a = eye(2,2);
+    }
+}

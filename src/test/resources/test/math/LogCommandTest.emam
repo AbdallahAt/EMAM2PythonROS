@@ -1,0 +1,7 @@
+package test.math;
+
+component LogCommandTest{
+    implementation Math{
+        Q a = log(15);
+    }
+}

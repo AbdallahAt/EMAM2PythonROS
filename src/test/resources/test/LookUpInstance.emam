@@ -1,0 +1,14 @@
+package test;
+import ba.LookUp;
+component LookUpInstance{
+    port out Q(-oo:oo) out1;
+
+    instance LookUp([ 1 2 3 4]) lookUp1;
+    instance LookUp([ 0 5 4 4]) lookUp2;
+    instance LookUp([ 1 2 7 9]) lookUp3;
+
+
+    connect 1 -> lookUp1.in1;
+    connect lookUp1.out1 -> lookUp3.in1;
+    connect lookUp2.out1 -> out1;
+}

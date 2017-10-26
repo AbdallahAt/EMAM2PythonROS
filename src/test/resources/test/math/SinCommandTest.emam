@@ -1,0 +1,7 @@
+package test.math;
+
+component SinCommandTest{
+    implementation Math{
+        Q a = sin(0.5);
+    }
+}

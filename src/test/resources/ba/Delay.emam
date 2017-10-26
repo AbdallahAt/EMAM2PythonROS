@@ -1,0 +1,9 @@
+package ba;
+
+component Delay(Q(-oo:oo) value) {
+	port
+		in Q(-oo:oo) in1,
+		out Q(-oo:oo) out1;
+
+
+}

@@ -1,0 +1,21 @@
+package test;
+
+component BasicPortsLoop{
+    ports in (-oo:1:oo) counter,
+          out (0rad:2rad) result;
+
+    implementation Math{
+           if counter < 0{
+               result = 0;
+           }
+           elseif counter < 100{
+               result = counter;
+           }
+           else{
+               result = 100;
+           }
+           end
+
+
+    }
+}
