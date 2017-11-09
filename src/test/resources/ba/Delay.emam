@@ -2,8 +2,6 @@ package ba;
 
 component Delay(Q(-oo:oo) value) {
 	port
-		in Q(-oo:oo) in1,
+		in Q(0N:150N) in1,
 		out Q(-oo:oo) out1;
-
-
 }

@@ -1,7 +1,7 @@
 package de.monticar.lang.monticar.generator.python;
 
 import de.monticore.lang.math.math._symboltable.expression.*;
-import de.monticore.lang.math.math._symboltable.matrix.MathMatrixVectorExpressionSymbol;
+import de.monticore.lang.math.math._symboltable.matrix.*;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,0 +1,13 @@
+package rbcar.lane;
+
+component Obstacle{
+  port
+        in Q(100mm:30000mm) sensorFront[1080],
+        in Q(100mm:30000mm) sensorLeft[1080],
+        in Q(100mm:30000mm) sensorRight[1080],
+        in Z(-1:2:1) modifier,
+        out Q(100mm:30000mm) offset,
+        out Q(100mm:oo) obstacleRightDist,
+        out Q(100mm:oo) obstacleLeftDist,
+        out Boolean obstacleTooClose;
+}

@@ -1,0 +1,6 @@
+package rbcar.lib;
+
+component Constant<T>(T value) {
+	port
+		out T output;
+}

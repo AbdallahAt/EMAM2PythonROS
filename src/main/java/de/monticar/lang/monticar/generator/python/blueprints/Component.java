@@ -37,7 +37,7 @@ public class Component {
         pythonCommands = new ArrayList<>();
         type = symbol.getComponentType().getFullName();
         name = symbol.getComponentType().getName();
-        fullName = symbol.getFullName();
+        // fullName = symbol.getFullName();
         parameter = symbol.getParameters().stream()
                 .map(s -> s.getName())
                 .collect(Collectors.toList());
@@ -51,11 +51,13 @@ public class Component {
                 .forEach(subSymbol -> {
                     instances.add(new Instance(subSymbol, this));
                 });
-        symbol.getConnectors().forEach(cSymbol -> connectors.add(new Connector(cSymbol)));
+        symbol.getConnectors().forEach(cSymbol ->
+                connectors.add(new Connector(cSymbol)));
         instances.forEach(instance -> imports.put(instance.getPath().toLowerCase(), instance.getType()));
         MathStatementsSymbol mst = Helper.getMathStatementsSymbolFor(symbol, symtab);
         if(Objects.nonNull(mst)){
-            List<MathExpressionSymbol> mExpressions = Helper.getMathStatementsSymbolFor(symbol, symtab).getMathExpressionSymbols();
+            List<MathExpressionSymbol> mExpressions = Helper.getMathStatementsSymbolFor(symbol,
+                    symtab).getMathExpressionSymbols();
             pythonCommands = Arrays.stream(mExpressions.stream()
                     .filter(Objects::nonNull)
                     .map(e -> addBehaviour(e))
@@ -63,7 +65,8 @@ public class Component {
                     .split(";")).collect(Collectors.toList());
         }
 
-        isRosPub = type.equals("RosPublisher");
+        isRosPub =
+                type.equals("RosPublisher");
         isRosSub =  type.equals("RosSubscriber");
 
     }

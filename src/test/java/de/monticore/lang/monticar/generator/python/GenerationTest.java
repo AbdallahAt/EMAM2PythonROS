@@ -2,22 +2,21 @@ package de.monticore.lang.monticar.generator.python;
 
 
 
-import de.monticar.lang.monticar.generator.python.ConversionHelper;
-import de.monticar.lang.monticar.generator.python.GeneratorPython;
+import de.monticar.lang.monticar.generator.python.*;
 import de.monticar.lang.monticar.generator.python.blueprints.Component;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ExpandedComponentInstanceSymbol;
 import de.monticore.lang.monticar.generator.AbstractSymtabTest;
 import de.monticore.symboltable.Scope;
 import org.junit.Test;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 
 public class GenerationTest extends AbstractSymtabTest {
     @Test
-    public void general() {
+    public void testLaneControl() {
         Scope symtab = createSymTab("src/test/resources");
         ExpandedComponentInstanceSymbol componentSymbol = symtab.<ExpandedComponentInstanceSymbol>resolve("test.basicPortsLoop", ExpandedComponentInstanceSymbol.KIND).orElse(null);
         assertNotNull(componentSymbol);
@@ -89,5 +88,78 @@ public class GenerationTest extends AbstractSymtabTest {
         assertEquals(res, "np.array([12,222,3333,4,55,6,7,8,9]).reshape(3,3)");
     }
 
+    @Test
+    public void testAddTagsFromList(){
+        GeneratorPython generator = new GeneratorPython();
+        RosTag tag1 = new RosTag();
+        tag1.component = "ba.Component";
+        RosTag tag2 = new RosTag();
+        tag2.component = "ab.Component";
+        RosTag tag3 = new RosTag();
+        tag3.component = "baab.Component";
+        ArrayList<RosTag> tags1 = new ArrayList<>();
+        ArrayList<RosTag> tags2 = new ArrayList<>();
+        tags1.add(tag1);
+        tags1.add(tag2);
+        tags2.add(tag1);
+        tags2.add(tag3);
+        generator.addTagsFromList(tags1);
+        assertEquals(generator.getTagList().size(), 2);
+        generator.addTagsFromList(tags2);
+        assertEquals(generator.getTagList().size(), 3);
+    }
+
+    @Test
+    public void testIsUniqueTag(){
+        GeneratorPython generatorPython = new GeneratorPython();
+        List<RosTag> tags = new ArrayList<>();
+        generatorPython.setTagList(tags);
+        RosTag tag1 = new RosTag();
+        tag1.component = "ba.Component";
+        RosTag tag2 = new RosTag();
+        tag2.component = "ba.Component";
+        RosTag tag3 = new RosTag();
+        tag3.component = "Component";
+        assertEquals(generatorPython.isUniqueTag(tag1.component), true);
+        tags.add(tag1);
+        assertEquals(generatorPython.isUniqueTag(tag1.component), false);
+        assertEquals(generatorPython.isUniqueTag(tag2.component), false);
+        assertEquals(generatorPython.isUniqueTag(tag3.component), true);
+
+    }
+    @Test
+    public void testReadYaml() {
+        List<RosTag> tags = TagReader.readYAML(this.getClass().getClassLoader().getResource("rbcar/tags/config.yaml").getPath());
+        assertNotNull(tags);
+        assertEquals(tags.get(0).component, "ba.Delay");
+        assertEquals(tags.get(0).subscriber.size(), 2);
+    }
+
+    @Test
+    public void testAddTagsFromPath(){
+        GeneratorPython generatorPython = new GeneratorPython();
+        generatorPython.addTagsFromPath(this.getClass().getClassLoader().getResource("rbcar/tags/config.yaml").getPath());
+        assertEquals(generatorPython.getTagList().get(0).component, "ba.Delay");
+        assertEquals(generatorPython.getTagList().get(0).subscriber.size(), 2);
+    }
+
+    @Test
+    public void testRosTags() {
+        Scope symtab = createSymTab("src/test/resources");
+        ExpandedComponentInstanceSymbol componentSymbol = symtab.<ExpandedComponentInstanceSymbol>resolve("ba.delay", ExpandedComponentInstanceSymbol.KIND).orElse(null);
+        GeneratorPython generatorPython = new GeneratorPython("./target/generated-sources-python/Test");
+        generatorPython.addComponent(componentSymbol, symtab);
+        generatorPython.addTagsFromPath(this.getClass().getClassLoader().getResource("rbcar/tags/config.yaml").getPath());
+        generatorPython.generate();
+    }
+
+    @Test
+    public void testGetMessageTypes(){
+        GeneratorPython generatorPython = new GeneratorPython("./target/generated-sources-python/Test");
+        TagReader<RosTag> reader = new TagReader<>();
+        List<RosTag> tags = reader.readYAML(this.getClass().getClassLoader().getResource("rbcar/tags/config.yaml").getPath());
+        HashSet<String> types = generatorPython.getMessageTypes(tags.get(0).subscriber, tags.get(0).publisher);
+        assertEquals(types.size(), 2);
+    }
 
 }

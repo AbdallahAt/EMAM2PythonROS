@@ -4,7 +4,6 @@ import de.monticore.lang.math.math._symboltable.expression.MathExpressionSymbol;
 import de.monticore.lang.math.math._symboltable.matrix.MathMatrixExpressionSymbol;
 import java.util.ArrayList;
 import java.util.List;
-
 public class ConversionHelper {
     private static List<String> names;
 

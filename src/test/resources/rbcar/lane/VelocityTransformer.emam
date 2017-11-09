@@ -1,0 +1,8 @@
+package rbcar.lane
+
+component VelocityTransformer{
+  port
+        in Q(-oo:oo) input,
+        out Q(0:4.5) velocity;
+
+}

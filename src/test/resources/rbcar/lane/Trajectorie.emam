@@ -1,0 +1,14 @@
+package rbcar.lane
+
+component Trajectorie{
+  port
+        in Q(-oo:oo)^{2,1} startPoint,
+        in Q(-oo:oo)^{2,1} destPoint,
+        in Z(-1:2:1) isRightLane,
+        out Q(-oo:oo)^{2,1} startOrientationPoint,
+        out Q(-oo:oo)^{2,1} destOrientationPoint,
+        out Q(-oo:oo)^{2,1} destOptPoint,
+        out Q(-oo:oo)^{2,1} dirVec, 
+        out Q(-oo:oo)^{2,1} orthVec,
+        out Z(-1:2:1) modifier;
+}

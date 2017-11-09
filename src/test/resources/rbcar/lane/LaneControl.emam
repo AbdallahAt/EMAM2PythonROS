@@ -1,0 +1,86 @@
+package rbcar.lane;
+
+import rbcar.lib.Pid;
+import rbcar.lib.Switch;
+import rbcar.lib.NumberComparator;
+import rbcar.lib.Constant;
+import rbcar.lib.Or;
+import rbcar.lib.ArraySum;
+
+component LaneControl{
+  port
+        in Q(-oo:oo)^{2,1} startPoint,
+        in Q(-oo:oo)^{2,1} destPoint,
+        in Q(-oo:oo)^{2,1} startOrientationPoint,
+        in Q(-oo:oo)^{2,1} destOrientationPoint,
+        in Q(-oo:oo)^{2,1} destOptPoint,
+        in Q(-oo:oo)^{2,1} dirVec, 
+        in Q(-oo:oo)^{2,1} orthVec,
+        in Z(-1:2:1) modifier,
+        in Q(100mm:30000mm) offset,
+        in Q(100mm:30000mm) obstacleRightDist,
+        in Q(100mm:30000mm) obstacleLeftDist,
+        in Boolean obstacleTooClose,
+        in Boolean logging,
+        in ROS position,
+        out Q(0:4.5) velocity,
+        out Q(-0.7853981633974483:0.7853981633974483) steering;
+
+  instance Pid<Q(-3:3)> pidOrientation;
+  instance Pid<Q(100mm:1000mm)> pidObstacleLeft;
+  instance Pid<Q(100mm:1000mm)> pidObstacleRight;
+  instance Pid<Q(-180:180)> pidVelocity;
+  instance SteeringTransformer steeringTransformer;
+  instance VelocityTransformer velocityTransformer;
+  instance Switch<Q(-oo:oo)> switch1;
+  instance Switch<Q(-oo:oo)> switch2;
+  instance Switch<Q(-oo:oo)> switch3;
+  instance Switch<Q(-oo:oo)> switch4;
+  instance NumberComparator numberComparator1;
+  instance NumberComparator numberComparator2;
+  instance Constant<Z(0:1)>(1) z_1;
+  instance Constant<Z(0:1)>(0) z_0;
+  instance Or or;
+  instance ArraySum<3> arraySum;
+
+  connect pidObstacleLeft.output -> numberComparator1.in1;
+  connect z_1.output -> numberComparator1.in2;
+  connect z_0.output -> numberComparator1.mode;
+
+  connect pidObstacleRight.output -> numberComparator2.in1;
+  connect z_1.output -> numberComparator2.in2;
+  connect z_0.output -> numberComparator2.mode;
+
+  connect pidObstacleLeft.output -> switch1.in1;
+  connect z_0.output -> switch1.in2;
+  connect numberComparator1.output -> switch1.cond;
+
+  connect pidObstacleRight.output -> switch2.in1;
+  connect z_0.output -> switch2.in2;
+  connect numberComparator2.output -> switch2.cond;
+
+  connect numberComparator1.output -> OR.in1;
+  connect numberComparator2.output -> OR.in2;
+
+  connect pidOrientation.output -> switch3.in1;
+  connect z_o.output -> switch3.in2;
+  connect OR.output -> switch3.cond;
+
+  connect numberComparator1.output -> OR.in1;
+  connect numberComparator2.output -> OR.in2;
+
+  connect switch1.output -> arraySum.inArr[1];
+  connect switch2.output -> arraySum.inArr[2];
+  connect switch3.output -> arraySum.inArr[3];
+
+  connect arraySum.sum -> steeringTransformer.input;
+  connect steeringTransformer->steering;
+
+  connect pidVelocity.output -> velocityTransformer.input;
+
+  connect velocityTransformer.velocity -> switch4.in1;
+  connect z_o.output -> switch4.in2;
+  connect obstacleTooClose -> switch4.cond;
+
+  connect switch4.output -> velocity;
+}

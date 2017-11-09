@@ -1,0 +1,8 @@
+package rbcar.lane
+
+component SteeringTransformer{
+  port
+        in Q(-oo:oo) input,
+        out Q(-0.7853981633974483:0.7853981633974483) steering;
+
+}

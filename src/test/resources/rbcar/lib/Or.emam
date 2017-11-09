@@ -1,0 +1,8 @@
+package rbcar.lib;
+
+component Or{
+	port
+    in Boolean in1,
+    in Boolean in2,
+		out Boolean output;
+}

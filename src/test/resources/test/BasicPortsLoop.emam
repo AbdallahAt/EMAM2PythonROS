@@ -5,6 +5,10 @@ component BasicPortsLoop{
           out (0rad:2rad) result;
 
     implementation Math{
+           for i = 1:2:10
+                c = 3;
+           end
+
            if counter < 0{
                result = 0;
            }

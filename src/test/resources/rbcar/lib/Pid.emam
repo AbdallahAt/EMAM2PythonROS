@@ -1,0 +1,13 @@
+package rbcar.lib;
+
+component Pid<T> {
+  ports
+        in Q(-oo:oo) p,
+        in Q(-oo:oo) i,
+        in Q(-oo:oo) dIn,
+        in Q(-oo:oo) windup,
+        in Q(-oo:oo) setPoint,
+        in T input,
+        out Q(-oo:oo) output;
+        
+}

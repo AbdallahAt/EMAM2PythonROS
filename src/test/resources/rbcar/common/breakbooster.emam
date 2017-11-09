@@ -1,0 +1,13 @@
+package car.control;
+
+component BrakeBooster<T>(T threshold, T boosted) {
+    ports
+            in T force_in,
+            out T force_out;
+
+    implementation Math {
+        if force_in >= threshold {
+            force_out = boosted;
+        }
+    }
+}

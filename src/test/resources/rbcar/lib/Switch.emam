@@ -1,0 +1,10 @@
+package rbcar.lib;
+
+component Switch<T> {
+  port
+        in T in1,
+        in T in2,
+        in Boolean cond,
+        out T output;
+        
+}

@@ -1,0 +1,7 @@
+package rbcar.lib;
+
+component ArraySum<Z(1:oo) n>{
+  port
+        in Q(-oo:oo) inArr[n],
+        out Q(-oo:oo) sum;
+}

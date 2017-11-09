@@ -1,0 +1,10 @@
+package rbcar.lib;
+
+component NumberComparator {
+  port
+        in Q(-o:oo) in1,
+        in Q(-oo:oo) in1,
+        in Z{0:1:4) mode,
+        out T output;
+        
+}
