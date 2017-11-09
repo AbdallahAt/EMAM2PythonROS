@@ -1,0 +1,41 @@
+
+component Car (N ownID, Q ownPosX, Q ownPosY, Q ownPosZ, Z ownMode,
+Z(0:100) ownBatteryLevel, Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoFront,
+Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoRight,
+Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoLeft) {
+
+	ports
+	    in Q steering,
+		in Q(-8.89 m/s : 8.89 m/s) velocity,
+		in Z(-1:1) bypass,
+
+	    out Z id,
+		out Q posX,
+		out Q posY,
+		out Q posZ,
+		out Z mode,
+		out Z(0:100) batteryLevel,
+		out Q(0.10000000149 m : 30.0 m)^{1081} sensorFront,
+		out Q(0.10000000149 m : 30.0 m)^{3} sensorRight,
+		out Q(0.10000000149 m : 30.0 m)^{3} sensorLeft;
+
+    implementation Math {
+        id = ownID;
+        posX = ownPosX;
+        posY = ownPosY;
+        posZ = ownPosZ;
+        mode = ownMode;
+        batteryLevel = ownBatteryLevel;
+
+        sensorFront[:] = ownHokuyoFront[:]
+
+        sensorRight[0] = ownHokuyoRight[843];
+        sensorRight[1] = ownHokuyoRight[540];
+        sensorRight[2] = ownHokuyoRight[246];
+
+        sensorLeft[0] = ownHokuyoLeft[246];
+        sensorLeft[1] = ownHokuyoLeft[540];
+        sensorLeft[2] = ownHokuyoLeft[843];
+
+    }
+}

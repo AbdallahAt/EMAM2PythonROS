@@ -1,0 +1,33 @@
+package v2v.decentral.subcomponents;
+import v2v.decentral.subcomponents.Controller;
+
+component Collision {
+
+	ports
+		in Q^{2} ownPosition,
+		in Q^{2} ownDirection,
+		in Q(-8.89 m/s : 8.89 m/s) ownVelocity,
+		in Q^{3} ownSensorRight,
+		in Q^{3} ownSensorLeft,
+		in Q^{2} car1Position,
+		in Q^{2} car1Direction,
+		in Q(-8.89 m/s : 8.89 m/s) car1Velocity,
+		in Q(0 m/s : 0 m/s) controllerOwnVelocity,
+
+		out Q(-8.89 m/s : 8.89 m/s) velocity,
+		out Q steering,
+		out Q distanceToIntersection,
+		out Q(-8.89 m/s : 8.89 m/s) velocityOfCar1,
+		out Q steeringOfCar1,
+		out Q distanceToDirectionOfCar1;
+
+	instance Controller controller;
+
+	connect velocity -> controller.ownVelocity;
+	connect distanceToIntersection -> controller.ownDistance;
+
+	connect velocityOfCar1 -> controller.car1Velocity;
+	connect distanceToDirectionOfCar1 -> controller.car1Distance;
+
+	connect controller.newVelocity -> controllerOwnVelocity;
+}

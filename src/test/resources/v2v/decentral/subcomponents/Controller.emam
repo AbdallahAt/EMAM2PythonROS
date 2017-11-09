@@ -1,0 +1,11 @@
+package v2v.decentral.subcomponents;
+
+component Controller {
+	ports
+		in Q(8.89 m/s : 8.89 m/s) ownVelocity,
+		in Q ownDistance,
+		in Q(8.89 m/s : 8.89 m/s) car1Velocity,
+		in Q car1Distance,
+
+		out Q(0 m/s : 0 m/s) newVelocity;
+}

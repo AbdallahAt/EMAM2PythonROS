@@ -1,0 +1,125 @@
+//zentralisierte C2C Modellierung mit MontiCAR
+package v2v.central;
+
+import v2v.central.Car;
+
+import v2v.central.subcomponents.Direction;
+import v2v.central.subcomponents.Obstacle;
+import v2v.central.subcomponents.Collision;
+
+
+component RSU {
+
+	ports
+		in Z car1ID,
+		in Q car1PosX,
+		in Q car1PosY,
+		in Q car1PosZ,
+		in Z car1Mode,
+		in Z(0:100) car1BatteryLevel,
+		in Q(0.10000000149 m : 30.0 m)^{1081} car1SensorFront,
+		in Q(0.10000000149 m : 30.0 m)^{3} car1SensorRight,
+		in Q(0.10000000149 m : 30.0 m)^{3} car1SensorLeft,
+
+		in Z car2ID,
+		in Q car2PosX,
+		in Q car2PosY,
+		in Q car2PosZ,
+		in Z car2Mode,
+		in Z(0:100) car1BatteryLevel,
+		in Q(0.10000000149 m : 30.0 m)^{1081} car2SensorFront,
+		in Q(0.10000000149 m : 30.0 m)^{3} car2SensorRight,
+		in Q(0.10000000149 m : 30.0 m)^{3} car2SensorLeft,
+
+        out Q car1Steering,
+        out Q(0 m/s : 0 m/s) car1Velocity,
+        out Z(-1:1) car1Bypass,
+
+        out Q car2Steering,
+        out Q(0 m/s : 0 m/s) car2Velocity,
+        out Z(-1:1) car2Bypass;
+
+	instance Car car1;
+	instance Car car2;
+
+	instance Direction directionOfCar1;
+	instance Direction directionOfCar2;
+	
+	instance Obstacle obstacle;
+
+	instance Collision collision;
+	
+
+	connect car1.id -> car1ID;
+	connect car1.posX -> car1PosX;
+	connect car1.posY -> car1PosY;
+	connect car1.posZ -> car1PosZ;
+	connect car1.mode -> car1Mode;
+	connect car1.batteryLevel -> car1BatteryLevel;
+	connect car1.sensorFront[:] -> car1SensorFront[:];
+	connect car1.sensorRight[:] -> car1SensorRight[:];	
+	connect car1.sensorLeft[:] -> car1SensorLeft[:];
+
+	connect car1Steering -> car1.steering;
+	connect car1Velocity -> car1.velocity;
+	connect car1Bypass -> car1.bypass;
+
+	connect car2.id -> car2ID;
+	connect car2.posX -> car2PosX;
+	connect car2.posY -> car2PosY;
+	connect car2.posZ -> car2PosZ;
+	connect car2.mode -> car2Mode;
+	connect car2.batteryLevel -> car2BatteryLevel;
+	connect car2.sensorFront[:] -> car2SensorFront[:];
+	connect car2.sensorRight[:] -> car2SensorRight[:];
+	connect car2.sensorLeft[:] -> car2SensorLeft[:];
+
+	connect car2Steering -> car2.steering;
+	connect car2Velocity -> car2.velocity;
+	connect car2Bypass -> car2.bypass;
+
+	connect car1PosX -> directionOfCar1.posX;
+	connect car1PosY -> directionOfCar1.posY;
+
+	connect car2PosX -> directionOfCar2.posX;
+	connect car2PosY -> directionOfCar2.posY;
+
+	connect car1PosX -> obstacle.car1PosX;
+	connect car1PosY -> obstacle.car1PosY;
+	connect car1PosZ -> obstacle.car1PosZ;
+	connect car1SensorFront[:] -> obstacle.car1SensorFront[:];
+	connect directionOfCar1[:] -> obstacle.car1Direction;
+
+	connect obstacle.car1Bypass ->car1Bypass;
+
+	connect car2PosX -> obstacle.car2PosX;
+	connect car2PosY -> obstacle.car2PosY;
+	connect car2PosZ -> obstacle.car2PosZ;
+	connect car2SensorFront[:] -> obstacle.car2SensorFront[:];
+	connect directionOfCar2[:] -> obstacle.car2Direction;
+
+	connect obstacle.car2Bypass ->car2Bypass;
+
+	connect directionOfCar1.position[:] -> collision.car1Position[:];
+	connect directionOfCar1.direction[:] -> collision.car1Direction[:];
+	connect car1SensorRight[:] -> collision.car1SensorRight[:];
+	connect car1SensorLeft[:] -> collision.car1SensorLeft[:];
+
+	connect collision.car1Velocity -> car1Velocity;
+	connect collision.car1Steering -> car1Steering;
+
+	connect directionOfCar2.position[:] -> collision.car2Position[:];
+	connect directionOfCar2.direction[:] -> collision.car2Direction[:];
+	connect car2SensorRight[:] -> collision.car2SensorRight[:];
+	connect car2SensorLeft[:] -> collision.car2SensorLeft[:];
+
+	connect collision.car2Velocity -> car2Velocity;
+	connect collision.car2Steering -> car2Steering;
+}
+
+
+
+
+
+
+

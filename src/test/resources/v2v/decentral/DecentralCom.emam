@@ -1,0 +1,22 @@
+package v2v.decentral;
+
+import v2v.decentral.DecentralV2V;
+
+
+component DecentralCom {
+
+    instance DecentralV2V car1;
+    instance DecentralV2V car2;
+
+    connect car1.selfID -> car2.carID;
+    connect car1.selfPosX -> car2.carPosX;
+    connect car1.selfPosY -> car2.carPosY;
+    connect car1.selfPosZ -> car2.carPosZ;
+    connect car1.selfMode -> car2.carMode;
+
+    connect car2.selfID -> car1.carID;
+    connect car2.selfPosX -> car1.carPosX;
+    connect car2.selfPosY -> car1.carPosY;
+    connect car2.selfPosZ -> car1.carPosZ;
+    connect car2.selfMode -> car1.carMode;
+}

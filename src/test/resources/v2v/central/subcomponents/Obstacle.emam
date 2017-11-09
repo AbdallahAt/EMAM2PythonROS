@@ -1,0 +1,21 @@
+package v2v.central.subcomponents;
+
+
+component Obstacle {
+
+	ports
+		 in Q car1PosX,
+		 in Q car1PosY,
+		 in Q car1PosZ,
+		 in Q(0.10000000149 m : 30.0 m)^{1081} car1SensorFront,
+		 in Q^{2} car1Direction,
+
+		in Q car2PosX,
+		in Q car2PosY,
+		in Q car2PosZ,
+		in Q(0.10000000149 m : 30.0 m)^{1081} car2SensorFront,
+		in Q^{2} car2Direction,
+
+		out Z(-1:1) car1Bypass,
+		out Z(-1:1) car2Bypass;
+}

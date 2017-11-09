@@ -1,0 +1,61 @@
+//dezentralisierte C2C Modellierung mit MontiCAR
+package v2v.decentral;
+import v2v.decentral.subcomponents.Direction;
+import v2v.decentral.subcomponents.Collision;
+
+component DecentralV2V (N ownID, Q ownPosX, Q ownPosY, Q ownPosZ, Z ownMode,
+	N1 ownBatteryLevel, Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoFront,
+	Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoRight,
+	Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoLeft) {
+
+	ports
+		in N1 carId,
+		in Q carPosX,
+		in Q carPosY,
+		in Q carPosZ,
+		in Z carMode,
+
+		out N1 selfID,
+		out Q selfPosX,
+		out Q selfPosY,
+		out Q selfPosZ,
+		out Z selfMode,
+
+		out Q posXOfCar,
+		out Q posYOfCar;
+
+    instance Direction ownDirection;
+	instance Direction carDirection;
+	instance Collision collision;
+
+	connect posXOfCar -> carDirection.posX;
+	connect posYOfCar -> carDirection.posY;
+
+	connect ownDirection.position[:] -> collision.ownPosition[:];
+	connect ownDirection.direction[:] -> collision.ownDirection[:];
+	connect ownDirection.velocity -> collision.ownVelocity;
+
+	connect carDirection.position[:] -> collision.car1Position[:];
+	connect carDirection.direction[:] -> collision.car1Direction[:];
+	connect carDirection.velocity -> collision.car1Velocity;
+
+	implementation Math {
+		ownDirection.posX = ownPosX;
+		ownDirection.posY = ownPosY;
+
+		collision.car1SensorRight[0] = ownHokuyoRight[843];
+		collision.car1SensorRight[1] = ownHokuyoRight[540];
+		collision.car1SensorRight[2] = ownHokuyoRight[246];
+
+		collision.car1SensorLeft[0] = ownHokuyoLeft[246];
+		collision.car1SensorLeft[1] = ownHokuyoLeft[540];
+		collision.car1SensorLeft[2] = ownHokuyoLeft[843];
+
+		selfID = ownId;
+        selfPosX = ownPosX;
+        selfPosY = ownPosY;
+        selfPosZ = ownPosZ;
+        selfMode = ownMode;
+        selfBatteryLevel = ownBatteryLevel;
+	}
+}
