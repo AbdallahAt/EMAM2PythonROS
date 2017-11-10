@@ -1,8 +1,9 @@
 package v2v.central.subcomponents;
 
+
 component Controller {
 
-	ports
+	ports 
 		in Q(-8.89 m/s : 8.89 m/s) velocity,
 
 	    out Q minDistance;

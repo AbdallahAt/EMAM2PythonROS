@@ -1,24 +1,26 @@
 package v2v.central.subcomponents;
+
 import v2v.central.subcomponents.Controller;
+
 
 component Collision {
 
 	ports
-		in Q^{2} car1Position,
-		in Q^{2} car1Direction,
+		in Q car1Position[2],
+		in Q car1Direction[2],
 		in Q(-8.89 m/s : 8.89 m/s) car1Velocity,
-		in Q^{3} car1SensorRight,
-		in Q^{3} car1SensorLeft,
+		in Q car1SensorRight[3],
+		in Q car1SensorLeft[3],
 		in Q car1MinDistanceToIntersection,
-		in Q^{2} car2Position,
-		in Q^{2} car2Direction,
+		in Q car2Position[2],
+		in Q car2Direction[2],
 		in Q(-8.89 m/s : 8.89 m/s) car2Velocity,
-		in Q^{3} car2SensorRight,
-		in Q^{3} car2SensorLeft,
+		in Q car2SensorRight[3],
+		in Q car2SensorLeft[3],
 		in Q car2MinDistancetoIntersection,
 
-        out Q(-8.89 m/s : 8.89 m/s) controllerVelocityOfCar1,
-        out Q(-8.89 m/s : 8.89 m/s) controllerVelocityOfCar2,
+		out Q(-8.89 m/s : 8.89 m/s) controllerVelocityOfCar1,
+		out Q(-8.89 m/s : 8.89 m/s) controllerVelocityOfCar2,
 
 		out Q(0 m/s : 0 m/s) velocityOfCar1,
 		out Q steeringOfCar1,

@@ -11,7 +11,7 @@ import v2v.central.subcomponents.Collision;
 component RSU {
 
 	ports
-		in Z car1ID,
+		in N car1ID,
 		in Q car1PosX,
 		in Q car1PosY,
 		in Q car1PosZ,
@@ -21,7 +21,7 @@ component RSU {
 		in Q(0.10000000149 m : 30.0 m)^{3} car1SensorRight,
 		in Q(0.10000000149 m : 30.0 m)^{3} car1SensorLeft,
 
-		in Z car2ID,
+		in N car2ID,
 		in Q car2PosX,
 		in Q car2PosY,
 		in Q car2PosZ,
@@ -31,13 +31,13 @@ component RSU {
 		in Q(0.10000000149 m : 30.0 m)^{3} car2SensorRight,
 		in Q(0.10000000149 m : 30.0 m)^{3} car2SensorLeft,
 
-        out Q car1Steering,
-        out Q(0 m/s : 0 m/s) car1Velocity,
-        out Z(-1:1) car1Bypass,
+		out Q car1Steering,
+		out Q(0 m/s : 0 m/s) car1Velocity,
+		out Z(-1:1) car1Bypass,
 
-        out Q car2Steering,
-        out Q(0 m/s : 0 m/s) car2Velocity,
-        out Z(-1:1) car2Bypass;
+		out Q car2Steering,
+		out Q(0 m/s : 0 m/s) car2Velocity,
+		out Z(-1:1) car2Bypass;
 
 	instance Car car1;
 	instance Car car2;
@@ -90,7 +90,7 @@ component RSU {
 	connect car1SensorFront[:] -> obstacle.car1SensorFront[:];
 	connect directionOfCar1[:] -> obstacle.car1Direction;
 
-	connect obstacle.car1Bypass ->car1Bypass;
+	connect obstacle.car1Bypass -> car1Bypass;
 
 	connect car2PosX -> obstacle.car2PosX;
 	connect car2PosY -> obstacle.car2PosY;
@@ -98,7 +98,7 @@ component RSU {
 	connect car2SensorFront[:] -> obstacle.car2SensorFront[:];
 	connect directionOfCar2[:] -> obstacle.car2Direction;
 
-	connect obstacle.car2Bypass ->car2Bypass;
+	connect obstacle.car2Bypass -> car2Bypass;
 
 	connect directionOfCar1.position[:] -> collision.car1Position[:];
 	connect directionOfCar1.direction[:] -> collision.car1Direction[:];

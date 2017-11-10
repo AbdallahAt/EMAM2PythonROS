@@ -1,41 +1,48 @@
+package v2v.central;
 
-component Car (N ownID, Q ownPosX, Q ownPosY, Q ownPosZ, Z ownMode,
-Z(0:100) ownBatteryLevel, Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoFront,
-Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoRight,
-Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoLeft) {
+
+component Car {
 
 	ports
-	    in Q steering,
-		in Q(-8.89 m/s : 8.89 m/s) velocity,
-		in Z(-1:1) bypass,
+        in N ownID,
+        in Q ownPosX,
+        in Q ownPosY,
+        in Q ownPosZ,
+        in Z ownMode,
+        in N1 ownBatteryLevel,
+        in Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoFront,
+        in Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoRight,
+        in Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoLeft,
 
-	    out Z id,
-		out Q posX,
-		out Q posY,
-		out Q posZ,
-		out Z mode,
-		out Z(0:100) batteryLevel,
-		out Q(0.10000000149 m : 30.0 m)^{1081} sensorFront,
-		out Q(0.10000000149 m : 30.0 m)^{3} sensorRight,
-		out Q(0.10000000149 m : 30.0 m)^{3} sensorLeft;
+        in Q steering,
+        in Q(-8.89 m/s : 8.89 m/s) velocity,
+        in Z(-1:1) bypass,
 
-    implementation Math {
-        id = ownID;
-        posX = ownPosX;
-        posY = ownPosY;
-        posZ = ownPosZ;
-        mode = ownMode;
-        batteryLevel = ownBatteryLevel;
+        out N id,
+        out Q posX,
+        out Q posY,
+        out Q posZ,
+        out Z mode,
+        out Z(0:100) batteryLevel,
+        out Q(0.10000000149 m : 30.0 m)^{1081} sensorFront,
+        out Q(0.10000000149 m : 30.0 m)^{3} sensorRight,
+        out Q(0.10000000149 m : 30.0 m)^{3} sensorLeft;
 
-        sensorFront[:] = ownHokuyoFront[:]
+    connect ownID -> id;
+    connect ownPosX -> posX;
+    connect ownPosY -> posY;
+    connect ownPosZ -> posZ;
+    connect ownMode -> mode;
+    connect ownBatteryLevel -> batteryLevel;
 
-        sensorRight[0] = ownHokuyoRight[843];
-        sensorRight[1] = ownHokuyoRight[540];
-        sensorRight[2] = ownHokuyoRight[246];
+    connect ownHokuyoFront[:] -> sensorFront[:]
 
-        sensorLeft[0] = ownHokuyoLeft[246];
-        sensorLeft[1] = ownHokuyoLeft[540];
-        sensorLeft[2] = ownHokuyoLeft[843];
+    connect ownHokuyoRight[843] -> sensorRight[0];
+    connect ownHokuyoRight[540] -> sensorRight[1];
+    connect ownHokuyoRight[246] -> sensorRight[2];
 
-    }
+    connect ownHokuyoLeft[246] -> sensorLeft[0];
+    connect ownHokuyoLeft[540] -> sensorLeft[1];
+    connect ownHokuyoLeft[843] -> sensorLeft[2];
+
 }

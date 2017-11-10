@@ -3,19 +3,26 @@ package v2v.decentral;
 import v2v.decentral.subcomponents.Direction;
 import v2v.decentral.subcomponents.Collision;
 
-component DecentralV2V (N ownID, Q ownPosX, Q ownPosY, Q ownPosZ, Z ownMode,
-	N1 ownBatteryLevel, Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoFront,
-	Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoRight,
-	Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoLeft) {
+component DecentralV2V {
 
 	ports
-		in N1 carId,
+		in N ownID,
+		in Q ownPosX,
+		in Q ownPosY,
+		in Q ownPosZ,
+		in Z ownMode,
+		in N1 ownBatteryLevel,
+		in Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoFront,
+		in Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoRight,
+		in Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoLeft,		
+
+		in N carID,
 		in Q carPosX,
 		in Q carPosY,
 		in Q carPosZ,
 		in Z carMode,
 
-		out N1 selfID,
+		out N selfID,
 		out Q selfPosX,
 		out Q selfPosY,
 		out Q selfPosZ,
@@ -24,12 +31,29 @@ component DecentralV2V (N ownID, Q ownPosX, Q ownPosY, Q ownPosZ, Z ownMode,
 		out Q posXOfCar,
 		out Q posYOfCar;
 
-    instance Direction ownDirection;
+	instance Direction ownDirection;
 	instance Direction carDirection;
 	instance Collision collision;
 
+	connect ownID -> selfID;
+	connect ownPosX -> selfPosX;
+	connect ownPosY -> selfPosY;
+	connect ownPosZ -> selfPosZ;
+	connect ownMode -> selfMode;
+
+	connect ownPosX -> ownDirection.posX;
+	connect ownPosY -> ownDirection.posY;
+
 	connect posXOfCar -> carDirection.posX;
 	connect posYOfCar -> carDirection.posY;
+
+	connect ownHokuyoRight[843] -> collision.car1SensorRight[0];
+	connect ownHokuyoRight[540] -> collision.car1SensorRight[1];
+	connect ownHokuyoRight[246] -> collision.car1SensorRight[2];
+
+	connect ownHokuyoLeft[246] -> collision.car1SensorLeft[0];
+	connect ownHokuyoLeft[540] -> collision.car1SensorLeft[1];
+	connect ownHokuyoLeft[843] -> collision.car1SensorLeft[2];
 
 	connect ownDirection.position[:] -> collision.ownPosition[:];
 	connect ownDirection.direction[:] -> collision.ownDirection[:];
@@ -38,24 +62,5 @@ component DecentralV2V (N ownID, Q ownPosX, Q ownPosY, Q ownPosZ, Z ownMode,
 	connect carDirection.position[:] -> collision.car1Position[:];
 	connect carDirection.direction[:] -> collision.car1Direction[:];
 	connect carDirection.velocity -> collision.car1Velocity;
-
-	implementation Math {
-		ownDirection.posX = ownPosX;
-		ownDirection.posY = ownPosY;
-
-		collision.car1SensorRight[0] = ownHokuyoRight[843];
-		collision.car1SensorRight[1] = ownHokuyoRight[540];
-		collision.car1SensorRight[2] = ownHokuyoRight[246];
-
-		collision.car1SensorLeft[0] = ownHokuyoLeft[246];
-		collision.car1SensorLeft[1] = ownHokuyoLeft[540];
-		collision.car1SensorLeft[2] = ownHokuyoLeft[843];
-
-		selfID = ownId;
-        selfPosX = ownPosX;
-        selfPosY = ownPosY;
-        selfPosZ = ownPosZ;
-        selfMode = ownMode;
-        selfBatteryLevel = ownBatteryLevel;
 	}
 }

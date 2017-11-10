@@ -1,7 +1,7 @@
 package v2v.decentral.subcomponents;
 
 component Direction {
-	ports
+	ports 
 		in Q posX,
 		in Q posY,
 

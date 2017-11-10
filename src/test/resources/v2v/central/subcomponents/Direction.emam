@@ -1,14 +1,14 @@
 package v2v.central.subcomponents;
 
+
 component Direction {
-	ports
+	ports 
 		in Q posX,
 		in Q posY,
 
 		out Q(-8.89 m/s : 8.89 m/s) velocity,
 		out Q^{2} position,
 		out Q^{2} direction;
-
 }
 
 

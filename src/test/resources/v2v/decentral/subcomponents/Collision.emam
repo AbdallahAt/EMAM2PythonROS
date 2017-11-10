@@ -30,4 +30,4 @@ component Collision {
 	connect distanceToDirectionOfCar1 -> controller.car1Distance;
 
 	connect controller.newVelocity -> controllerOwnVelocity;
-}
+}		
