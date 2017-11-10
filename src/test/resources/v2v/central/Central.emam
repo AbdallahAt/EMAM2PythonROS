@@ -11,7 +11,7 @@ import v2v.central.subcomponents.Collision;
 component RSU {
 
 	ports
-		in N car1ID,
+		in Z car1ID,
 		in Q car1PosX,
 		in Q car1PosY,
 		in Q car1PosZ,
@@ -21,7 +21,7 @@ component RSU {
 		in Q(0.10000000149 m : 30.0 m)^{3} car1SensorRight,
 		in Q(0.10000000149 m : 30.0 m)^{3} car1SensorLeft,
 
-		in N car2ID,
+		in Z car2ID,
 		in Q car2PosX,
 		in Q car2PosY,
 		in Q car2PosZ,

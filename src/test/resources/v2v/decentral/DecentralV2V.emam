@@ -6,23 +6,23 @@ import v2v.decentral.subcomponents.Collision;
 component DecentralV2V {
 
 	ports
-		in N ownID,
+		in Z ownID,
 		in Q ownPosX,
 		in Q ownPosY,
 		in Q ownPosZ,
 		in Z ownMode,
-		in N1 ownBatteryLevel,
+		in Z(0:100) ownBatteryLevel,
 		in Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoFront,
 		in Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoRight,
 		in Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoLeft,		
 
-		in N carID,
+		in Z carID,
 		in Q carPosX,
 		in Q carPosY,
 		in Q carPosZ,
 		in Z carMode,
 
-		out N selfID,
+		out Z selfID,
 		out Q selfPosX,
 		out Q selfPosY,
 		out Q selfPosZ,

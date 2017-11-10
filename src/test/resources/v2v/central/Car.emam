@@ -4,12 +4,12 @@ package v2v.central;
 component Car {
 
 	ports
-        in N ownID,
+        in Z ownID,
         in Q ownPosX,
         in Q ownPosY,
         in Q ownPosZ,
         in Z ownMode,
-        in N1 ownBatteryLevel,
+        in Z(0:100) ownBatteryLevel,
         in Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoFront,
         in Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoRight,
         in Q(0.10000000149 m : 30.0 m)^{1081} ownHokuyoLeft,
@@ -18,7 +18,7 @@ component Car {
         in Q(-8.89 m/s : 8.89 m/s) velocity,
         in Z(-1:1) bypass,
 
-        out N id,
+        out Z id,
         out Q posX,
         out Q posY,
         out Q posZ,
